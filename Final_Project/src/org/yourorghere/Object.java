@@ -38,7 +38,7 @@ public class Object implements GLEventListener, MouseListener, MouseMotionListen
           penampang_prop6, penampang_prop7, penampang_prop8, penampang_prop9, penampang_prop10, 
           chamber1,chamber2,chamber3,chamber4,chamber5,chamber6,chamber7,
           turbin1,turbin2,turbin3,gardan1,gardan2,gardan3, properler,penampang_prop_end,
-          propeller_utm, engine_closer;
+          propeller_utm, engine_closer,crack1,crack2,crack3;
   private float angle = 0.0f;
 
   private int prevMouseX, prevMouseY;
@@ -244,8 +244,26 @@ public class Object implements GLEventListener, MouseListener, MouseMotionListen
     Penampang_Prop(gl, 2, 5, 7, 8);
     gl.glEndList();
     
+    //Crack
+    crack1 = gl.glGenLists(1);
+    gl.glNewList(crack1, GL.GL_COMPILE);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE, white, 0);
+    Crack1(gl);
+    gl.glEndList();
+    
+    crack2 = gl.glGenLists(1);
+    gl.glNewList(crack2, GL.GL_COMPILE);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE, white, 0);
+    Crack2(gl);
+    gl.glEndList();
     gl.glEnable(GL.GL_NORMALIZE);
-                
+    
+    crack3 = gl.glGenLists(1);
+    gl.glNewList(crack3, GL.GL_COMPILE);
+    gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE, white, 0);
+    Crack3(gl);
+    gl.glEndList();
+    
     drawable.addMouseListener(this);
     drawable.addMouseMotionListener(this);
   }
@@ -596,6 +614,26 @@ public class Object implements GLEventListener, MouseListener, MouseMotionListen
     gl.glCallList(penampang_prop_end);
     gl.glPopMatrix();
     //==========================================================================
+    
+    //Crack's 
+    gl.glPushMatrix();
+    gl.glTranslatef(3.0f, -2.0f, 7.0f);
+    gl.glRotatef(angle - 9.0f, 0.0f, 0.0f, 1.0f);
+    gl.glCallList(crack1);
+    gl.glPopMatrix();
+    
+    gl.glPushMatrix();
+    gl.glTranslatef(3.0f, -2.0f, -8.0f);
+    gl.glRotatef(angle - 9.0f, 0.0f, 0.0f, 1.0f);
+    gl.glCallList(crack2);
+    gl.glPopMatrix();
+    
+    gl.glPushMatrix();
+    gl.glTranslatef(3.0f, -2.0f, -26.0f);
+    gl.glRotatef(angle - 9.0f, 0.0f, 0.0f, 1.0f);
+    gl.glCallList(crack3);
+    gl.glPopMatrix();
+    
     gl.glPopMatrix();
   }
 
@@ -758,6 +796,8 @@ public class Object implements GLEventListener, MouseListener, MouseMotionListen
         gl.glEnd();
   }
   
+ 
+  
     public static void Engine_Closer(GL gl) {
        
         float BODY_LENGTH = 5.0f;
@@ -770,6 +810,40 @@ public class Object implements GLEventListener, MouseListener, MouseMotionListen
        // glu.gluDisk(q, 0.0f, BODY_RADIUS, SLICES, STACKS);
         gl.glTranslatef(0.0f, 0.0f, BODY_LENGTH);
     }
+    
+      static void Crack1(GL gl) {
+        float BODY_LENGTH = 1.0f;
+        float BODY_RADIUS = 1.0f;
+        int SLICES = 100;
+        int STACKS = 100;
+        GLU glu = new GLU();
+        GLUquadric q = glu.gluNewQuadric();
+        glu.gluCylinder(q, 13.0, 12.0, 8.0, SLICES, STACKS);
+        gl.glTranslatef(0.0f, 0.0f, -10.0f);
+    }
+    
+       static void Crack2(GL gl) {
+        float BODY_LENGTH = 3.0f;
+        float BODY_RADIUS = 1.0f;
+        int SLICES = 100;
+        int STACKS = 100;
+        GLU glu = new GLU();
+        GLUquadric q = glu.gluNewQuadric();
+        glu.gluCylinder(q, 13.0, 13.0, 15.0, SLICES, STACKS);
+        gl.glTranslatef(0.0f, 0.0f, BODY_LENGTH);
+    }
+       
+          static void Crack3(GL gl) {
+        float BODY_LENGTH = 2.0f;
+        float BODY_RADIUS = 1.0f;
+        int SLICES = 100;
+        int STACKS = 100;
+        GLU glu = new GLU();
+        GLUquadric q = glu.gluNewQuadric();
+        glu.gluCylinder(q, 10.0, 13.0, 18.0, SLICES, STACKS);
+        gl.glTranslatef(0.0f, 0.0f, BODY_LENGTH);
+    }
+
   // Methods required for the implementation of MouseListener
   public void mouseEntered(MouseEvent e) {}
   public void mouseExited(MouseEvent e) {}
