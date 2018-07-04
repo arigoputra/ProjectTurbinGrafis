@@ -3,7 +3,6 @@ package org.yourorghere;
 import java.applet.*;
 import java.awt.*;
 import java.io.*;
-
 import javax.media.opengl.*;
 import com.sun.opengl.util.*;
 import org.yourorghere.Object;
@@ -17,7 +16,7 @@ public class Final_Project extends Applet {
     canvas.addGLEventListener(new Object());
     canvas.setSize(getSize());
     add(canvas, BorderLayout.CENTER);
-    animator = new FPSAnimator(canvas, 60);
+    animator = new FPSAnimator(canvas, 70);
   }
 
   public void start() {
@@ -25,7 +24,6 @@ public class Final_Project extends Applet {
   }
 
   public void stop() {
-    // FIXME: do I need to do anything else here?
     animator.stop();
   }
 }
