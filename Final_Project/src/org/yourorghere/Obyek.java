@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package org.yourorghere;
 
 import java.awt.*;
@@ -34,7 +29,7 @@ import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLCanvas;
 import javax.media.opengl.GLEventListener;
 
-public class Obyek implements GLEventListener, MouseListener, MouseMotionListener, KeyListener {
+public class Obyek implements  GLEventListener, MouseListener, MouseMotionListener, KeyListener{
 
      class vector {
 
@@ -47,7 +42,8 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
             y = startY;
             z = startZ;
         }
-
+//RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+        //Vector Rotasi Buat kamera
         void vectorRotation(vector reference, float angle) {
             vector temp = reference;
             float magnitude = (float) Math.sqrt(Math.pow(temp.x, 2) + Math.pow(temp.y, 2) + Math.pow(temp.z, 2));
@@ -71,9 +67,13 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
                     + (dot_product * last_factor_rodrigues * z));
         }
     }
-    vector depanBelakang = new vector(0f, 0f, -1f);//deklarasi awal vektor untuk maju & mundur
-    vector samping = new vector(1f, 0f, 0f);//deklarasi awal vektor untuk gerakan ke kanan & kiri
-    vector vertikal = new vector(0f, 1f, 0f);//deklarasi awal vetor untuk gerakan naik & turun
+    vector Sumbu_z = new vector(0f, 0f, -1f);
+    vector Sumbu_x = new vector(1f, 0f, 0f);
+    vector Sumbu_y = new vector(0f, 1f, 0f);
+
+    vector depanBelakang = new vector(0f, 0f, -1f);
+    vector samping = new vector(1f, 0f, 0f);
+    vector vertikal = new vector(0f, 1f, 0f);
     float Cx = 0, Cy = 2.5f, Cz = 0;
     float Lx = 0, Ly = 2.5f, Lz = -20f;
     float angle_depanBelakang = 0f;
@@ -85,13 +85,25 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
     float silinderAngle = 90f;
     float silinderAngleY = 0f;
     float silinderAngleZ = 0f;
-     boolean ori = true, silinder1,silinder2,silinder3,silinder4,silinder5,silinder6 = false, 
-            kamera,kamera1,kamera2,kamera3,kamera4,kamera5 = false;
+
+    float sudut_x = 0f;
+    float sudut_x2 = 0f;
+
+    float sudut_z = 0f;
+    float sudut_z2 = 0f;
+
+    float sudut_y = 0f;
+    float sudut_y2 = 0f;
+    
+    boolean ori = true, silinder1, silinder2, silinder3, silinder4, silinder5, silinder6 = false,
+            kamera, kamera1, kamera2, kamera3, kamera4, kamera5 = false;
+//================================================Kamera===============================================   
     /*
      ini adalah metod untuk melakukan pergerakan.
      magnitude adalah besarnya gerakan sedangkan direction digunakan untuk menentukan arah.
      gunakan -1 untuk arah berlawanan dengan vektor awal
      */
+//Pergerakan Keyboard===========================================================
     private void vectorMovement(vector toMove, float magnitude, float direction) {
         float speedX = toMove.x * magnitude * direction;
         float speedY = toMove.y * magnitude * direction;
@@ -103,10 +115,11 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
         Ly += speedY;
         Lz += speedZ;
     }
-
+//=============================Kamera Rotasi==========================================
+    
     private void cameraRotation(vector reference, double angle) {
         float M = (float) (Math.sqrt(Math.pow(reference.x, 2) + Math.pow(reference.y, 2) + Math.pow(reference.z, 2)));//magnitud
-        float Up_x1 = reference.x / M; //melakukan
+        float Up_x1 = reference.x / M; 
         float Up_y1 = reference.y / M; //normalisasi
         float Up_z1 = reference.z / M; //vektor patokan
         float VLx = Lx - Cx;
@@ -130,12 +143,12 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
         Ly = Ly1 + Cy;
         Lz = Lz1 + Cz;
     }
-    
+//NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN    
     public static void main(String[] args) {
         Frame frame = new Frame("Turbin Jet Pesawat Boeing RI 973");
         GLCanvas canvas = new GLCanvas();
 
-        canvas.addGLEventListener(new Obyek());
+        canvas.addGLEventListener(new Object());
         frame.add(canvas);
         frame.setSize(900, 720);
         final Animator animator = new Animator(canvas);
@@ -156,17 +169,17 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
 
     private float view_rotx = 20.0f, view_roty = 30.0f, view_rotz = 0.0f;
     private int tabung1, tabung2, kerucut, propeller,
-            tabung_luar, penampang_prop1, penampang_prop2, penampang_prop3, penampang_prop4, penampang_prop5,
-            penampang_prop6, penampang_prop7, penampang_prop8, penampang_prop9, penampang_prop10,
-            chamber1, chamber2, chamber3, chamber4, chamber5, chamber6, chamber7,
-            turbin1, turbin2, turbin3, gardan1, gardan2, gardan3, properler, penampang_prop_end,
-            propeller_utm, engine_closer, crack1, crack2, crack3, crack4, backhorn;
+                tabung_luar, penampang_prop1, penampang_prop2, penampang_prop3, penampang_prop4, penampang_prop5,
+                penampang_prop6, penampang_prop7, penampang_prop8, penampang_prop9, penampang_prop10,
+                chamber1, chamber2, chamber3, chamber4, chamber5, chamber6, chamber7,
+                turbin1, turbin2, turbin3, gardan1, gardan2, gardan3, properler, penampang_prop_end,
+                propeller_utm, engine_closer, crack1, crack2, crack3, crack4, 
+                cylinder_backhorn, backhorn;
     private float angle = 0.0f;
-    private int str ;
+
     private int prevMouseX, prevMouseY;
     private boolean mouseRButtonDown = false;
     public void init(GLAutoDrawable drawable) {
-    
 
         GL gl = drawable.getGL();
 
@@ -190,13 +203,27 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
         gl.glEnable(GL.GL_LIGHT0);
         gl.glEnable(GL.GL_DEPTH_TEST);
 
-        /*Make the Compressor*/
+        /*Make the Engine*/
+//Propeller Utama
+        kerucut = gl.glGenLists(1);
+        gl.glNewList(kerucut, GL.GL_COMPILE);
+        gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE, pos, 0);
+        kerucut(gl);
+        gl.glEndList();
+
+        propeller_utm = gl.glGenLists(1);
+        gl.glNewList(propeller_utm, GL.GL_COMPILE);
+        gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE, grey, 0);
+        Propeller_quads(gl);
+        gl.glEndList();
+        //--------------------------------------------------------------------------
+// Propeller's ke 2
         propeller = gl.glGenLists(1);
         gl.glNewList(propeller, GL.GL_COMPILE);
         gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE, white, 0);
         Propeller(gl);
         gl.glEndList();
-
+//Dalam tabung putih
         tabung1 = gl.glGenLists(1);
         gl.glNewList(tabung1, GL.GL_COMPILE);
         gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE, red, 0);
@@ -262,28 +289,14 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
         gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE, red, 0);
         Penampang_Prop(gl, 2, 5, 7, 6);
         gl.glEndList();
-
+//Luar tabung merah
         tabung_luar = gl.glGenLists(1);
         gl.glNewList(tabung_luar, GL.GL_COMPILE);
         gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE, white, 0);
         Tabung_luar(gl);
         gl.glEndList();
         //--------------------------------------------------------------------------
-        //Caps_UTM
-        kerucut = gl.glGenLists(1);
-        gl.glNewList(kerucut, GL.GL_COMPILE);
-        gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE, pos, 0);
-        kerucut(gl);
-        gl.glEndList();
-
-        propeller_utm = gl.glGenLists(1);
-        gl.glNewList(propeller_utm, GL.GL_COMPILE);
-        gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE, grey, 0);
-        Propeller_quads(gl);
-        gl.glEndList();
-        //--------------------------------------------------------------------------
-
-        //Chamber
+        //Chamber ( Belakang Propeller's ke 2 )
         chamber1 = gl.glGenLists(1);
         gl.glNewList(chamber1, GL.GL_COMPILE);
         gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE, blue, 0);
@@ -325,15 +338,14 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
         gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE, red, 0);
         Penampang_Prop(gl, 2, 5, 7, 7);
         gl.glEndList();
-
+// Penutup kerucut terbuka
         engine_closer = gl.glGenLists(1);
         gl.glNewList(engine_closer, GL.GL_COMPILE);
         gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE, white, 0);
         Engine_Closer(gl);
         gl.glEndList();
         //--------------------------------------------------------------------------  
-
-        //Turbin
+//Turbin
         gardan1 = gl.glGenLists(1);
         gl.glNewList(gardan1, GL.GL_COMPILE);
         gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE, red, 0);
@@ -352,8 +364,7 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
         Gardan1(gl);
         gl.glEndList();
         //--------------------------------------------------------------------------
-
-        //Prop_Back_End
+//Prop_Back_End
         properler = gl.glGenLists(1);
         gl.glNewList(properler, GL.GL_COMPILE);
         gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE, blue, 0);
@@ -365,8 +376,7 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
         gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE, red, 0);
         Penampang_Prop(gl, 2, 5, 7, 8);
         gl.glEndList();
-
-        //Crack
+//Crack ( Cangkang Luar )
         crack1 = gl.glGenLists(1);
         gl.glNewList(crack1, GL.GL_COMPILE);
         gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE, white, 0);
@@ -391,8 +401,13 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
         gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE, white, 0);
         Crack4(gl);
         gl.glEndList();
-        
-        //Back_Horn
+//Cylinder_backHorn        
+        cylinder_backhorn = gl.glGenLists(1);
+        gl.glNewList(cylinder_backhorn, GL.GL_COMPILE);
+        gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE, grey, 0);
+        Engine_Closer(gl);
+        gl.glEndList();
+//Back_Horn
         backhorn = gl.glGenLists(1);
         gl.glNewList(backhorn, GL.GL_COMPILE);
         gl.glMaterialfv(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE, pos, 0);
@@ -401,7 +416,9 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
 
         drawable.addMouseListener(this);
         drawable.addMouseMotionListener(this);
+        //drawable.addMouseWheelListener(this);
         drawable.addKeyListener(this);
+        
     }
 
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
@@ -421,39 +438,14 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
         gl.glTranslatef(-3.0f, 0.0f, -200.0f);
         
     }
+   
+    //untuk scroll mouse
+    static double x = 3;
+    static double y = -5;
+    static double i = 3;
+    static double j = 5;
+
     
-    //untuk kepala piston
-    double turun_piston = 0;
-    double naik_piston = 2;
-
-    //untuk katup piston
-    double turun_katup = 0, turun_katup_2 = 0;
-    double naik_katup = 0.2, naik_katup_2 = 0.2;
-
-    //untuk lengan piston
-    double sudut_min = 0;
-    double sudut_max = 15;
-    //untuk kamera
-    static double x = 0;
-    static double y = 0;
-    static double i = 0;
-    static double j = 0;
-
-    double sudut = 0;
-    private int oldMouseX;
-    private int oldMouseY;
-
-    float HEIGHT = 0f;
-
-    float geser_kiri = 0;
-    float geser_kanan = 0;
-    float geser_pipa1 = 0;
-    float geser_pipa2 = 0;
-    float geser_busi = 0;
-    float katup1 = 0;
-    float katup2 = 0;
-    boolean geser = false;
-
     public void display(GLAutoDrawable drawable) {
         // Turn the propeller teeth
         angle += 5.0f;
@@ -474,7 +466,7 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
         gl.glRotatef(view_roty, 0.0f, 1.0f, 0.0f);
         gl.glRotatef(view_rotz, 0.0f, 0.0f, 1.0f);
 
-        // Make the Compressor
+        // Membuat Propeller's 2
         //1
         gl.glPushMatrix();
         gl.glTranslatef(3.0f, -2.0f, 10.0f);
@@ -595,7 +587,8 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
         gl.glRotatef(8.0f * angle - 9.0f, 0.0f, 0.0f, 1.0f);
         gl.glCallList(penampang_prop10);
         gl.glPopMatrix();
-        // Cylinders       
+        
+// Cylinders pada propeller's sub ke 2      
         gl.glPushMatrix();
         gl.glTranslatef(3.0f, -2.0f, -1.5f);
         gl.glRotatef(angle - 9.0f, 0.0f, 0.0f, 1.0f);
@@ -608,7 +601,7 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
         gl.glCallList(tabung_luar);
         gl.glPopMatrix();
         //==========================================================================
-        // Chamber 
+// Chamber 
         gl.glPushMatrix();
         gl.glTranslatef(3.0f, -2.0f, 0.0f);
         gl.glRotatef(angle - 9.0f, 0.0f, 0.0f, 1.0f);
@@ -651,7 +644,7 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
         gl.glCallList(chamber7);
         gl.glPopMatrix();
         //==========================================================================
-        //Turbin
+//Turbin
         //1
         gl.glPushMatrix();
         gl.glTranslatef(3.0f, -2.0f, -15.7f);
@@ -670,7 +663,7 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
         gl.glRotatef(2.0f * angle - 9.0f, 0.0f, 0.0f, 1.0f);
         gl.glCallList(gardan1);
         gl.glPopMatrix();
-        //Propeller_Back
+        //Propeller_Back (Setelah Gardan )
         //1
         gl.glPushMatrix();
         gl.glTranslatef(3.0f, -2.0f, -13.0f);
@@ -707,14 +700,14 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
         gl.glRotatef(angle - 9.0f, 0.0f, 0.0f, 1.0f);
         gl.glCallList(penampang_prop10);
         gl.glPopMatrix();
-
+//Penutup kerucut terbuka
         gl.glPushMatrix();
         gl.glTranslatef(3.0f, -2.0f, -5.0f);
         gl.glRotatef(angle - 9.0f, 0.0f, 0.0f, 1.0f);
         gl.glCallList(engine_closer);
         gl.glPopMatrix();
         //==========================================================================
-        //Caps_UTM
+//Propeller Utama
         gl.glPushMatrix();
         gl.glTranslatef(3.0f, -2.0f, 10.5f);
         gl.glRotatef(angle - 9.0f, 0.0f, 0.0f, 1.0f);
@@ -722,18 +715,30 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
         gl.glPopMatrix();
 
         gl.glPushMatrix();
-        gl.glTranslatef(3.0f, -2.0f, 10.5f);
-        gl.glRotatef(-50.0f * angle -34.0f, 0.0f, 0.0f, 1.0f);
+        gl.glTranslatef(3.0f, -2.0f, 11.5f);
+        gl.glRotatef(-50.0f * angle -45.0f, 0.0f, 0.0f, 1.0f);
         gl.glCallList(propeller_utm);
         gl.glPopMatrix();
 
         gl.glPushMatrix();
-        gl.glTranslatef(3.0f, -2.0f, 10.0f);
+        gl.glTranslatef(3.0f, -2.0f, 12.0f);
         gl.glRotatef(50.0f * angle - 0.0f, 0.0f, 0.0f, 1.0f);
         gl.glCallList(propeller_utm);
         gl.glPopMatrix();
+        
+        gl.glPushMatrix();
+        gl.glTranslatef(3.0f, -2.0f, 12.0f);
+        gl.glRotatef(50.0f * angle - 22.0f, 0.0f, 0.0f, 1.0f);
+        gl.glCallList(propeller_utm);
+        gl.glPopMatrix();
+        
+        gl.glPushMatrix();
+        gl.glTranslatef(3.0f, -2.0f, 12.0f);
+        gl.glRotatef(50.0f * angle - 66.0f, 0.0f, 0.0f, 1.0f);
+        gl.glCallList(propeller_utm);
+        gl.glPopMatrix();
         //==========================================================================
-        //Propeller_End
+//Propeller Terakhir
         //1
         gl.glPushMatrix();
         gl.glTranslatef(3.0f, -2.0f, -16.0f);
@@ -782,46 +787,74 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
         gl.glRotatef(angle - 9.0f, 0.0f, 0.0f, 1.0f);
         gl.glCallList(penampang_prop_end);
         gl.glPopMatrix();
-        //==========================================================================
-
-        //Crack's 
+        //======================================================================
+//Crack's 
         gl.glPushMatrix();
         gl.glTranslatef(3.0f, -2.0f, 7.0f);
-        gl.glRotatef(angle - 9.0f, 0.0f, 0.0f, 1.0f);
+        gl.glRotatef(0.0f * angle - 9.0f, 0.0f, 0.0f, 1.0f);
         gl.glCallList(crack1);
         gl.glPopMatrix();
 
         gl.glPushMatrix();
         gl.glTranslatef(3.0f, -2.0f, -8.0f);
-        gl.glRotatef(angle - 9.0f, 0.0f, 0.0f, 1.0f);
+        gl.glRotatef(0.0f * angle - 9.0f, 0.0f, 0.0f, 1.0f);
         gl.glCallList(crack2);
         gl.glPopMatrix();
 
         gl.glPushMatrix();
         gl.glTranslatef(3.0f, -2.0f, -33.0f);
-        gl.glRotatef(angle - 9.0f, 0.0f, 0.0f, 1.0f);
+        gl.glRotatef(0.0f * angle - 9.0f, 0.0f, 0.0f, 1.0f);
         gl.glCallList(crack3);
         gl.glPopMatrix();
         
         gl.glPushMatrix();
         gl.glTranslatef(3.0f, -2.0f, -37.0f);
-        gl.glRotatef(angle - 9.0f, 0.0f, 0.0f, 1.0f);
+        gl.glRotatef(0.0f * angle - 9.0f, 0.0f, 0.0f, 1.0f);
         gl.glCallList(crack4);
         gl.glPopMatrix();
-        
-        //Back_Horn
+//Cylinder sebelum BackHorn
+     //1
+        gl.glPushMatrix();
+        gl.glTranslatef(3.0f, -2.0f, -25.5f);
+        gl.glRotatef(angle - 9.0f, 0.0f, 0.0f, 1.0f);
+        gl.glCallList(gardan1);
+        gl.glPopMatrix();
+     //2
+        gl.glPushMatrix();
+        gl.glTranslatef(3.0f, -2.0f, -30.5f);
+        gl.glRotatef(angle - 9.0f, 0.0f, 0.0f, 1.0f);
+        gl.glCallList(gardan2);
+        gl.glPopMatrix();
+//Cylinder BackHorn (kerucut terbuka)
+        gl.glPushMatrix();
+        gl.glTranslatef(3.0f, -2.0f, -34.5f);
+        gl.glRotatef(0.0f * angle - 9.0f, 0.0f, 0.0f, 1.0f);
+        gl.glCallList(cylinder_backhorn);
+        gl.glPopMatrix();
+//Back_Horn
         gl.glPushMatrix();
         gl.glTranslatef(3.0f, -2.0f, -43.5f);
-        gl.glRotatef(angle - 9.0f, 0.0f, 0.0f, 1.0f);
+        gl.glRotatef(0.0f * angle - 9.0f, 0.0f, 0.0f, 1.0f);
         gl.glCallList(backhorn);
         gl.glPopMatrix();
 
         gl.glPopMatrix();
+//NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
+
+//RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+//----------------------------kamera -------------------------------------------
+        if (kamera) {
+            KeyPressed(74);
+        }
+        if (kamera1) {
+            KeyPressed(76);
+        }
+        if (kamera2) {
+            KeyPressed(73);
+        }
+        gl.glFlush();
     }
-
-//    public void displayChanged(GLAutoDrawable drawable, boolean modeChanged, boolean deviceChanged) {
-//    }
-
+//NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN
     public static void kerucut(GL gl) {
 
         float BODY_LENGTH = 5.0f;
@@ -933,6 +966,7 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
         glu.gluDisk(q, 0.0f, BODY_RADIUS, SLICES, STACKS);
     }
 
+   
     public static void Propellers(GL gl) {
         gl.glBegin(GL.GL_TRIANGLES);
 //1
@@ -948,123 +982,35 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
         gl.glVertex3d(-12, -1.5, 1.5);
         gl.glVertex3d(0, 0, 0);
         gl.glVertex3d(-12, 1.5, 0);
-//2
-        /*gl.glVertex3d(7.0, 8.0, 1.5);
-        gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(9.0, 6.0, 0);
-        gl.glVertex3d(9.0, -6.0, 1.5);
-        gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(7.0, -8.0, 0);
-        gl.glVertex3d(-7.0, -8.0, 1.5);
-        gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(-9.0, -8.0, 0);
-        gl.glVertex3d(-9.0, -6.0, 1.5);
-        gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(-7.0, 8.0, 0);*/
+
         gl.glEnd();
 
     }
 
-/*    public static float deg2Rad(float sudut) {
-        return sudut * (22 / 7) / 180;
-    }*/
 
     public static void Propeller_quads(GL gl) {
-/*         sudutAwal = deg2Rad(sudutAwal);
-           sudutAkhir = deg2Rad(sudutAkhir);
-           deltaSudut = deg2Rad(deltaSudut);
-           float sudut = sudutAwal;*/
+
         gl.glBegin(GL.GL_QUADS);
-//1=============================================================================
+//==============================================================================
         gl.glVertex3d(12, 1.5, 1.5);
         gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(0, 0, 1.5);
+        gl.glVertex3d(0, 0, -1.5);
         gl.glVertex3d(12, -1.5, 1.5);
         
         gl.glVertex3d(1.5, 12, 1.5);
         gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(0, 0, 1.5);
+        gl.glVertex3d(0, 0, -1.5);
         gl.glVertex3d(-1.5, 12, 1.5);
         
         gl.glVertex3d(1.5, -12, 1.5);
         gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(0, 0, 1.5);
+        gl.glVertex3d(0, 0, -1.5);
         gl.glVertex3d(-1.5, -12, 1.5);
         
         gl.glVertex3d(-12,-1.5, 1.5);
         gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(0, 0, 1.5);
+        gl.glVertex3d(0, 0, -1.5);
         gl.glVertex3d(-12, 1.5, 1.5);
-//2=============================================================================        
-        gl.glVertex3d(7.0, 8.0, 1.5);
-        gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(0, 0, 1.5);
-        gl.glVertex3d(9.0, 6.0, 1.5);
-        
-        gl.glVertex3d(9.0, -6.0, 1.5);
-        gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(0, 0, 1.5);
-        gl.glVertex3d(7, -8, 1.5);
-        
-        gl.glVertex3d(-7.0, -8, 1.5);
-        gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(0, 0, 1.5);
-        gl.glVertex3d(-9.0, -8.0, 1.5);
-        
-        gl.glVertex3d(-9.0,6, 1.5);
-        gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(0, 0, 1.5);
-        gl.glVertex3d(-7.0, 8.0, 1.5);
-//3=============================================================================
-        /*gl.glVertex3d(4.7, 8.1, 1.5);
-        gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(0, 0, 1.5);
-        gl.glVertex3d(2.0, 9.0, 1.5);
-        
-        gl.glVertex3d(-2.0, 9.0, 1.5);
-        gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(0, 0, 1.5);
-        gl.glVertex3d(-4.7, -8.1, 1.5);
-        
-        gl.glVertex3d(-4.7, -8.1, 1.5);
-        gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(0, 0, 1.5);
-        gl.glVertex3d(-2.0, -9.0, 1.5);
-        
-        gl.glVertex3d(2.0,-9.0, 1.5);
-        gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(0, 0, 1.5);
-        gl.glVertex3d(4.7, -8.1, 1.5);
-//4=============================================================================
-        gl.glVertex3d(10.0, 4.0, 1.5);
-        gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(0, 0, 1.5);
-        gl.glVertex3d(10.2, 1.2, 1.5);
-        
-        gl.glVertex3d(10.2, -1.2, 1.5);
-        gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(0, 0, 1.5);
-        gl.glVertex3d(10.0, -4.0, 1.5);
-        
-        gl.glVertex3d(-10.0, -4.0, 1.5);
-        gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(0, 0, 1.5);
-        gl.glVertex3d(-10.2, -1.2, 1.5);
-        
-        gl.glVertex3d(-10.2,1.2, 1.5);
-        gl.glVertex3d(0, 0, 0);
-        gl.glVertex3d(0, 0, 1.5);
-        gl.glVertex3d(-10.0, 4.0, 1.5);*/
-        /*while (sudut + deltaSudut <= sudutAkhir) {
-            float sudutBerikutnya = sudut + deltaSudut;
-            double x1 = Math.cos(Math.toRadians(sudut)) * jariJari;
-            double y1 = Math.sin(Math.toRadians(sudut)) * jariJari;
-            double x2 = Math.cos(Math.toRadians(sudutBerikutnya)) * jariJari;
-            double y2 = Math.sin(Math.toRadians(sudutBerikutnya)) * jariJari;
-            sudut += deltaSudut;
-            gl.glVertex3d(x1, y1, 0);
-            gl.glVertex3d(x2, y2, 0);
-            gl.glVertex3f(0, 0, 0);*/
 
             gl.glEnd();
             
@@ -1079,10 +1025,25 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
         GLU glu = new GLU();
         GLUquadric q = glu.gluNewQuadric();
         glu.gluCylinder(q, BODY_RADIUS, 3, BODY_LENGTH, SLICES, STACKS);
-        // glu.gluDisk(q, 0.0f, BODY_RADIUS, SLICES, STACKS);
+        // glu.gluDisk(q, 0.0f, BODY_RADIUS, SLICES, STACKS); // Tutup
         gl.glTranslatef(0.0f, 0.0f, BODY_LENGTH);
     }
+    
+     public static void Back_Horn(GL gl) {
 
+        float BODY_LENGTH = 20.0f;
+        float BODY_RADIUS = 0.0f;
+        int SLICES = 100;
+        int STACKS = 100;
+        GLU glu = new GLU();
+        GLUquadric q = glu.gluNewQuadric();
+        glu.gluCylinder(q, BODY_RADIUS, 8, BODY_LENGTH, SLICES, STACKS);
+        glu.gluDisk(q, 0.0f, BODY_RADIUS, SLICES, STACKS);
+        gl.glTranslatef(0.0f, 0.0f, BODY_LENGTH);
+
+    }
+     
+//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
     static void Crack1(GL gl) {
         float BODY_LENGTH = 1.0f;
         float BODY_RADIUS = 1.0f;
@@ -1127,21 +1088,35 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
         gl.glTranslatef(0.0f, 0.0f, BODY_LENGTH);
     }
     
-     public static void Back_Horn(GL gl) {
-
-        float BODY_LENGTH = 20.0f;
-        float BODY_RADIUS = 0.0f;
-        int SLICES = 100;
-        int STACKS = 100;
-        GLU glu = new GLU();
-        GLUquadric q = glu.gluNewQuadric();
-        glu.gluCylinder(q, BODY_RADIUS, 8, BODY_LENGTH, SLICES, STACKS);
-        glu.gluDisk(q, 0.0f, BODY_RADIUS, SLICES, STACKS);
-        gl.glTranslatef(0.0f, 0.0f, BODY_LENGTH);
-
-    }
-
-    // Methods required for the implementation of MouseListener
+   /*  static void setengah(GL gl) {
+        
+        gl.glBegin(GL.GL_QUADS);
+        gl.glNormal3f(0.0f, 0.0f, 1.0f);
+        for (int sudut = 180; sudut <= 360; sudut += 5) {
+            double radian = sudut * Math.PI / 180;
+            double nextRadian = (sudut + 5) * Math.PI / 180;
+            double z = 0.4 * Math.cos(radian);
+            double y = 0.4 * Math.sin(radian);
+            double nextz = 0.4 * Math.cos(nextRadian);
+            double nexty = 0.4 * Math.sin(nextRadian);
+          
+            gl.glTexCoord2d(0, 0);
+            gl.glVertex3d(0, y, z);
+            gl.glTexCoord2d(1, 0);
+            gl.glVertex3d(1.5, y, z);
+            gl.glTexCoord2d(1, 1);
+            gl.glVertex3d(1.5, nexty, nextz);
+            gl.glTexCoord2d(0, 1);
+            gl.glVertex3d(0, nexty, nextz);
+            
+            
+        }
+        gl.glEnd();
+        
+    }*/
+    
+//RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR    
+    // Methods implementasi pergerakan mouse
     public void mouseEntered(MouseEvent e) {
     }
 
@@ -1165,7 +1140,7 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
     public void mouseClicked(MouseEvent e) {
     }
 
-    // Methods required for the implementation of MouseMotionListener
+    // Methods Implementasi Mouse Listener
     public void mouseDragged(MouseEvent e) {
         int x = e.getX();
         int y = e.getY();
@@ -1185,148 +1160,66 @@ public class Obyek implements GLEventListener, MouseListener, MouseMotionListene
 
     }
 
-    public void mouseWheelMoved(MouseWheelEvent mwe) {
-        int arah = mwe.getWheelRotation();
-        System.out.println(arah);
-        if (arah < 0) {
+    public void mouseWheelMoved(int button, int dir, int x, int y) {
+       
+        if (dir < 0) {
             //scroll atas
-            if (j > -8) {
                 j -= 1;
-            }
-
+           
         } else {
             //scroll bawah
-            if (j < 20) {
-                j += 1;
-            }
-
+                j += 1;  
         }
     }
-     public void keyTyped(KeyEvent e){}
+     public void keyTyped(KeyEvent e){
+     }
 
-   
-     
-    public void keyPressed(KeyEvent e){}
-    
-    
+  
+    public void keyPressed(KeyEvent e){
+        System.out.println(e.getKeyCode());
+    }
 
-   
+    
     public void keyReleased(KeyEvent e){}
     
     public void displayChanged(GLAutoDrawable drawable, boolean modeChanged, boolean deviceChanged) {
     }
-
-    void KeyPressed(int keyCode) {
-          //huruf W
+    
+    
+        void KeyPressed ( int keyCode){
+//huruf W
         if (keyCode == 7) {
-            vectorMovement(depanBelakang, 2f, 1f);
+            vectorMovement(depanBelakang, 2.5f, 1.5f);
         } //huruf S
         else if (keyCode == 83) {
-            vectorMovement(depanBelakang, 2f, -1f);
+            vectorMovement(depanBelakang, 2.5f, -1.5f);
         } //huruf A
         else if (keyCode == 68) {
-            vectorMovement(samping, 2f, 1f);
+            vectorMovement(samping, 2.5f, 1.5f);
         } //huruf D
         else if (keyCode == 65) {
-            vectorMovement(samping, 2f, -1f);
-        } //huruf X
-        else if (keyCode == 88) {
-            vectorMovement(depanBelakang, 2f, 1f);
-        }//panah atas
-        else if (keyCode == 38) {
-            vectorMovement(vertikal, 2f, 1f);
-        } //panah bawah
-        else if (keyCode == 40) {
-            vectorMovement(vertikal, 2f, -1f);
-        } //tombol spasi X+
-        else if (keyCode == 52) {
-            if (silinder1) {
-                silinder1 = false;
-            } else {
-                silinder1 = true;
-            }
-        }
-        //tombol animasi X- (A)
-        else if (keyCode == 53) {
-            if (silinder2) {
-                silinder2 = false;
-            } else {
-                silinder2 = true;
-            }
-        }
-        //tombol animasi Z+ (U)karna sudah dirotasi awalnya
-        else if (keyCode == 85) {
-            if (silinder3) {
-                silinder3 = false;
-            } else {
-                silinder3 = true;
-            }
-        }
-        //tombol animasi Z- 
-        else if (keyCode == 49) {
-            if (silinder4) {
-                silinder4 = false;
-            } else {
-                silinder4 = true;
-            }
-        }
-        //tombol animasi Y- (v) karna sudah dirotasi awalnya
-        else if (keyCode == 51) {
-            if (silinder5) {
-                silinder5 = false;
-            } else {
-                silinder5 = true;
-            }
-        }
-        //tombol animasi Y+ (N) karna sudah dirotasi awalnya
-        else if (keyCode == 50) {
-            if (silinder6) {
-                silinder6 = false;
-            } else {
-                silinder6 = true;
-            }
-        }//enter
-       else if (keyCode == 10) {
+            vectorMovement(samping, 2.5f, -1.5f);
+        } 
+
+        //Tombol enter
+        else if (keyCode == 10) {
             if (kamera) {
                 kamera = false;
             } else {
                 kamera = true;
             }
-        }
-        else if (keyCode == 81) {
+        } else if (keyCode == 81) {
             if (kamera1) {
                 kamera1 = false;
             } else {
                 kamera1 = true;
             }
-        }
-        else if (keyCode == 87) {
+        } else if (keyCode == 87) {
             if (kamera2) {
                 kamera2 = false;
             } else {
                 kamera2 = true;
             }
-        }
-        else if (keyCode == 69) {
-            if (kamera3) {
-                kamera3 = false;
-            } else {
-                kamera3 = true;
-            }
-        }
-        else if (keyCode == 82) {
-            if (kamera4) {
-                kamera4 = false;
-            } else {
-                kamera4 = true;
-            }
         }   
-        else if (keyCode == 84) {
-            if (kamera5) {
-                kamera5 = false;
-            } else {
-                kamera5 = true;
-            }
-        }
     }
 }
